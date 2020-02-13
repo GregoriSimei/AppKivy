@@ -7,110 +7,35 @@
 <Menu>:
 	BoxLayout:
 		orientation: 'vertical'
-		canvas:
-			Color:
-				rgba: (1,1,1, 0.9)
-			Rectangle:
-				size: self.size
-				pos: self.pos
-		BoxLayout:
-			orientation: 'vertical'
-			ActionBar:
-				ActionView:
-					ActionPrevious:
-						title: 'Cultura Jovem'
-					ActionButton:
-						text: 'Cultura Jovem'
-					ActionButton:
-						text: 'Perfil'
-
-			ScrollView:
-				BoxLayout:
-					orientation: 'vertical'
-					padding: 1
-					spacing: 2
-					size_hint_y: None
-					height: self.minimum_height
-
-					BoxInformations:
-						size_hint_y: None
-						height: 80
-						orientation: 'vertical'
-						Label:
-							text: 'GRegori'
-						Label:
-						    text: 'Neste sabado teremos o nosso tão esperado culto ao ar Livre. Não esqueça de trazerem seus amigos e conhecidos. Se você não nos conhece ainda, esse é uma boa oportunidade para conhecer !!'
-					BoxInformations:
-						size_hint_y: None
-						height: 80
-						orientation: 'vertical'
-						Label:
-							text: 'GRegori'
-						Label:
-						    text: 'Neste sabado teremos o nosso tão esperado culto ao ar Livre. Não esqueça de trazerem seus amigos e conhecidos. Se você não nos conhece ainda, esse é uma boa oportunidade para conhecer !!'
-					BoxInformations:
-						size_hint_y: None
-						height: 80
-						orientation: 'vertical'
-						Label:
-							text: 'GRegori'
-						Label:
-						    text: 'Neste sabado teremos o nosso tão esperado culto ao ar Livre. Não esqueça de trazerem seus amigos e conhecidos. Se você não nos conhece ainda, esse é uma boa oportunidade para conhecer !!'
-					BoxInformations:
-						size_hint_y: None
-						height: 80
-						orientation: 'vertical'
-						Label:
-							text: 'GRegori'
-						Label:
-						    text: 'Neste sabado teremos o nosso tão esperado culto ao ar Livre. Não esqueça de trazerem seus amigos e conhecidos. Se você não nos conhece ainda, esse é uma boa oportunidade para conhecer !!'
-
-		BoxLayout:
+		
+		Carousel:
 			orientation: 'horizontal'
-			size_hint_y: 0.07
-			canvas:
-				Color:
-					rgba: (1, 1, 1, 1)
-				Rectangle:
-					size: self.size
-					pos: self.pos
-			Button:
-				text: 'gregori'
-			ButtonMenuCentro:
-				text: 'gregori'
-			Button:
-				text: 'gregori'
 
-<BoxInformations@BoxLayout>
-	canvas:
-		Color:
-			rgb: (1, 1, 1)
-		Ellipse:
-			size: (self.height/2)/2, (self.height/2)/2
-			pos: self.pos
-		Ellipse:
-			size: (self.height/2)/2, (self.height/2)/2
-			pos: self.x, self.y + self.height - (self.height/2)/2
-		Ellipse:
-			size: (self.height/2)/2, (self.height/2)/2
-			pos: self.x + self.width - (self.height/2)/2, self.y
-		Ellipse:
-			size: (self.height/2)/2, (self.height/2)/2
-			pos: self.x + self.width - (self.height/2)/2, self.y + self.height - (self.height/2)/2
-		Rectangle:
-			size: self.width - (self.height/2)/2, self.height
-			pos: self.x + ((self.height/2)/2)/2, self.y
-		Rectangle:
-			size: (self.height/2)/2, self.height - (self.height/2)/2
-			pos: self.x, self.y + ((self.height/2)/2)/2
-		Rectangle:
-			size: (self.height/2)/2, self.height - (self.height/2)/2
-			pos: self.x + self.width - (self.height/2)/2, self.y + ((self.height/2)/2)/2	
+			BoxLayout:
+				id: calendario
+				orientation: 'vertical'
+				ScrollView:
+					id: calendarioScroll
+					orientation: 'vertical'
 
-<ButtonMenuCentro@ButtonBehavior+Label>
-	canvas.before:
-		Color: 
-			rgba: (0.45, 0.6, 0.7, 1)
-		Ellipse:
-			size: self.height + self.height/2, self.height + self.height/2
-			pos: self.x + self.width/2 - self.height + self.height/2, self.y
+			BoxLayout:
+				id: principal
+				ScrollView:
+					id: principalScroll
+					orientation: 'vertical'
+
+			BoxLayout:
+				id: projetos
+				ScrollView: 
+					id: projetosScroll
+					orientation: 'vertical'
+
+	BoxLayout:
+		orientation: 'horizontal'
+		size_hint_y: 0.08
+		Button:
+			text: 'calender'
+		Button:
+			text: 'CJ'
+		Button:
+			text: 'Projects'
