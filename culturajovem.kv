@@ -9,33 +9,59 @@
 		orientation: 'vertical'
 		
 		Carousel:
+			id: carousel
 			orientation: 'horizontal'
 
-			BoxLayout:
-				id: calendario
+			ScrollView:
+				id: calendarioScroll
 				orientation: 'vertical'
-				ScrollView:
-					id: calendarioScroll
+				BoxLayout:
 					orientation: 'vertical'
+					size_hint_y: None
+					height: self.minimum_height
+					Label:
+						text: 'blabla'
+						color: (0, 0, 0, 1)
+						size_hint_y: None
+						height: 500
+						canvas.before:
+							Color:
+								rgba: (0, 0, 1, 1)
+							Rectangle:
+								pos: self.pos
+								size: self.size
+					Label:
+						text: 'blabla'
+						color: (0, 0, 0, 1)
+						size_hint_y: None
+						height: 500
+						canvas.before:
+							Color:
+								rgba: (0, 1, 0, 1)
+							Rectangle:
+								pos: self.pos
+								size: self.size
 
-			BoxLayout:
-				id: principal
-				ScrollView:
-					id: principalScroll
-					orientation: 'vertical'
+			ScrollView:
+				id: principalScroll
+				orientation: 'vertical'
 
-			BoxLayout:
-				id: projetos
-				ScrollView: 
-					id: projetosScroll
-					orientation: 'vertical'
-
+			ScrollView: 
+				id: projetosScroll
+				orientation: 'vertical'
+				
 	BoxLayout:
 		orientation: 'horizontal'
 		size_hint_y: 0.08
 		Button:
 			text: 'calender'
+			color: [(0,0,0,1) , (1,1,1,1)][root.ids.carousel.index == 0]
+			on_press: root.ids.carousel.index = 0
 		Button:
 			text: 'CJ'
+			color: [(0,0,0,1) , (1,1,1,1)][root.ids.carousel.index == 1]
+			on_press: root.ids.carousel.index = 1
 		Button:
 			text: 'Projects'
+			color: [(0,0,0,1) , (1,1,1,1)][root.ids.carousel.index == 2]
+			on_press: root.ids.carousel.index = 2
