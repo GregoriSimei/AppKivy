@@ -53,28 +53,7 @@
 					orientation: 'vertical'
 					size_hint_y: None
 					height: self.minimum_height
-					Label:
-						text: 'blabla'
-						color: (0, 0, 0, 1)
-						size_hint_y: None
-						height: 500
-						canvas.before:
-							Color:
-								rgba: (0, 0, 1, 1)
-							Rectangle:
-								pos: self.pos
-								size: self.size
-					Label:
-						text: 'blabla'
-						color: (0, 0, 0, 1)
-						size_hint_y: None
-						height: 500
-						canvas.before:
-							Color:
-								rgba: (0, 1, 0, 1)
-							Rectangle:
-								pos: self.pos
-								size: self.size
+					
 
 			ScrollView:
 				orientation: 'vertical'
@@ -86,8 +65,34 @@
 					BoxLayout:
 						size_hint_y: None
 						width: 200
+						padding: '10sp'
 						Label:
-							text: 'Sabado 26/03'
+							size_hint_x: 0.02
+							canvas:
+								Color: 
+									rgba: (0.65, 0.65, 0.65, 1)
+								Rectangle:
+									pos: self.x+(self.width*1.5)/2, self.y
+									size: self.width/10, self.height
+								Color: 
+									rgba: (0.8, 0.8, 0.8,1)
+								Ellipse:
+									pos: self.x, self.y+(self.height/2)-(self.width/2)
+									size: self.width*1.5, self.width*1.5
+
+						Label:
+							text: '8:00'
+							color: (0, 0, 0, 0.5)
+							size_hint_x: 0.2
+						Label:
+							text: 'Pescaria no parque'
+							canvas.before:
+								Color:
+									rgba: (0, 0.5, 0.9, 1)
+								RoundedRectangle:
+									size: self.size
+									pos: self.pos
+									radius: [(10.0, 10.0), (10.0, 10.0), (10.0, 10.0), (10.0, 10.0)]
 					Label:
 						text: 'blabla'
 						color: (0, 0, 0, 1)
