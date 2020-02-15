@@ -6,6 +6,7 @@
 
 <Menu>:
 	BoxLayout:
+		id: boxMenu
 		orientation: 'vertical'
 		canvas:
 			Color:
@@ -23,9 +24,10 @@
 				Rectangle:
 					size: self.size
 					pos: self.pos
-			Image:
-				size_hint_x: 0.2
-				color: (1, 1, 1, 0.35)
+			BoxLayout:
+				size_hint_x: None
+				width: 0
+			buttonTopConfig:
 				source: 'img/menu.png'
 			Carousel:
 				id: carouselIgreja
@@ -37,9 +39,7 @@
 					color: (0,0.6,0.6,1)
 					text: 'IB GUABIROTUBA'
 					bold: True
-			Image:
-				size_hint_x: 0.2
-				color: (1, 1, 1, 0.4)
+			buttonTopConfig:
 				source: 'img/definicoes.png'
 
 		Carousel:
@@ -49,7 +49,7 @@
 			ScrollView:
 				orientation: 'vertical'
 				BoxLayout:
-					id: calendarioScroll
+					id: calendario_Scroll
 					orientation: 'vertical'
 					size_hint_y: None
 					height: self.minimum_height
@@ -77,34 +77,17 @@
 								size: self.size
 
 			ScrollView:
-				id: principalScroll
 				orientation: 'vertical'
 				BoxLayout:
+					id: principal_Scroll
 					orientation: 'vertical'
 					size_hint_y: None
 					height: self.minimum_height
-					Label:
-						text: 'blabla'
-						color: (0, 0, 0, 1)
+					BoxLayout:
 						size_hint_y: None
-						height: 500
-						canvas.before:
-							Color:
-								rgba: (1, 0, 0, 1)
-							Rectangle:
-								pos: self.pos
-								size: self.size
-					Label:
-						text: 'blabla'
-						color: (0, 0, 0, 1)
-						size_hint_y: None
-						height: 500
-						canvas.before:
-							Color:
-								rgba: (0, 1, 1, 1)
-							Rectangle:
-								pos: self.pos
-								size: self.size
+						width: 200
+						Label:
+							text: 'Sabado 26/03'
 					Label:
 						text: 'blabla'
 						color: (0, 0, 0, 1)
@@ -131,8 +114,9 @@
 				size_hint_x: None
 				width: 0
 
-			buttonScreenDown:
+			buttonBottomMenu:
 				on_release: root.ids.carousel.index = 0
+				on_press: root.calendario()
 				BoxLayout:
 					padding: '0sp', '0sp', '0sp', '3sp'
 					Image:
@@ -146,7 +130,7 @@
 						font_size: '10sp'
 						color: [(0.7,0.7,0.7,1) , (0,0.6,0.6,1)][root.ids.carousel.index == 0]
 
-			buttonScreenDown:
+			buttonBottomMenu:
 				on_release: root.ids.carousel.index = 1
 				BoxLayout:
 					padding: '0sp', '0sp', '0sp', '3sp'
@@ -162,7 +146,7 @@
 						color: [(0.7,0.7,0.7,1) , (0,0.6,0.6,1)][root.ids.carousel.index == 1]
 				
 
-			buttonScreenDown:
+			buttonBottomMenu:
 				on_release: root.ids.carousel.index = 2
 				BoxLayout:
 					padding: '0sp', '0sp', '0sp', '3sp' 
@@ -178,6 +162,10 @@
 						color: [(0.7,0.7,0.7,1) , (0,0.6,0.9,1)][root.ids.carousel.index == 2]
 
 
-<buttonScreenDown@ButtonBehavior+BoxLayout>
+<buttonBottomMenu@ButtonBehavior+BoxLayout>
 	orientation: 'vertical'
 	padding: 5
+
+<buttonTopConfig@ButtonBehavior+Image>
+	size_hint_x: 0.2
+	color: (1, 1, 1, 0.4)
