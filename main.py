@@ -6,7 +6,13 @@ class TelaManager(ScreenManager):
     pass
 
 class Menu(Screen):
+
+	def __init__(self, **kwargs):
+		super(Menu, self).__init__(**kwargs)
+		self.carregarCalendario()
+
 	def carregarCalendario(self):
+		print (self.manager)
 		pass
 
 class Culturajovem(App):
