@@ -7,14 +7,14 @@
 	},
 	{	
 		"data"     : "01/01/2020",
-		"horario"  : "08:00",
-		"titulo"   : "Pescaria no parque",
+		"horario"  : "09:00",
+		"titulo"   : "no parque",
 		"conteudo" : "Estaremos fazendo uma pescaria no parque de acordo com o que Cristo nos orientou. Você esta mais que conidado !"
 	},
 	{	
 		"data"     : "01/01/2020",
-		"horario"  : "08:00",
-		"titulo"   : "Pescaria no parque",
+		"horario"  : "10:00",
+		"titulo"   : "Pescaria",
 		"conteudo" : "Estaremos fazendo uma pescaria no parque de acordo com o que Cristo nos orientou. Você esta mais que conidado !"
 	}
 ]
