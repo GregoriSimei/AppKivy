@@ -1,5 +1,6 @@
 import json
 import requests
+from loadFiles 							import *
 from kivy.app 							import App
 from kivy.uix.screenmanager 			import Screen, ScreenManager
 from kivy.uix.label 					import Label
@@ -14,21 +15,24 @@ class TelaManager(ScreenManager):
 
 class Menu(Screen):
 
-
 	def calendario(self):
-		arq   = open('./arq/calendario.json','w')
-		try:
-			getApi = requests.get("https://boldeagles.000webhostapp.com/calendario.php")
-			arq.write(json.dumps(getApi.text))
-			jsonGet = json.loads(getApi.text)
-			for data in jsonGet :
-				self.dinamicContentCalendar(data)
-		except:
-			arq.close()
-		else:
-			arq.close()
+		
+		#Label de data 
+		boxDate = Label()
+		boxDate.size_hint_y = None
+		boxDate.height = 70
 
-	def dinamicContentCalendar (self, evento):
+
+		apiGet = LoadFiles().getAllDatasCalendar()
+		date = ""
+		for data in apiGet :
+			if data["date"] != date:
+				print(data["date"])
+				date = data["date"]
+			self.addDinamicContentCalendar(data)
+		
+
+	def addDinamicContentCalendar (self, evento):
 
 		def update_rect(instance, value):
 		    instance.rect.pos = instance.pos
@@ -66,11 +70,11 @@ class Menu(Screen):
 		titleBox = Label()
 		with titleBox.canvas.before: 
 			Color(rgba = (0, 0.5, 0.9, 1))
-			titleBox.rect = RoundedRectangle(size = boxContainer.size, 
+			titleBox.rect = RoundedRectangle(size = titleBox.size, 
 											 pos = titleBox.pos, 
 											 radius = [(10.0, 10.0), (10.0, 10.0), (10.0, 10.0), (10.0, 10.0)])
 
-		# Muda o tamanho e a posição do widget titleBox
+		# Atualiza o tamanho e a posição do widget titleBox
 		titleBox.bind(pos=update_rect, size=update_rect)
 
 		# Adiciona os textos nos widgets
@@ -93,4 +97,3 @@ class Culturajovem(App):
 
 
 Culturajovem().run()
-
