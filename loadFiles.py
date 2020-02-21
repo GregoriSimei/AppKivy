@@ -9,7 +9,9 @@ class LoadFiles(object):
 	def getAllDatasCalendar(self):
 		arq   = open('./arq/calendario.json','w')
 		try:
-			getApi = requests.get("https://boldeagles.000webhostapp.com/calendario.php")
+			site    = "https://boldeagles.000webhostapp.com/calendario.php"
+			local   = "http://localhost/apiCulturaJovem/calendario.php" 
+			getApi  = requests.get(local)
 			arq.write(json.dumps(getApi.text))
 			jsonGet = json.loads(getApi.text)
 		except:
@@ -17,7 +19,6 @@ class LoadFiles(object):
 			jsonGet = '{"Nothing"}'
 		else:
 			arq.close()
-
 		return jsonGet
 		
 	def getIdDataCalendar(self, id):
