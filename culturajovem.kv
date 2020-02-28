@@ -89,7 +89,7 @@
 
 			buttonBottomMenu:
 				on_release: root.ids.carousel.index = 0
-				on_press: root.calendario()
+				on_press: root.addDinamicContentCalendar()
 				BoxLayout:
 					padding: '0sp', '0sp', '0sp', '3sp'
 					Image:
@@ -134,6 +134,46 @@
 						font_size: '10sp'
 						color: [(0.7,0.7,0.7,1) , (0,0.6,0.9,1)][root.ids.carousel.index == 2]
 
+<boxTitleCalendar>
+	cols: 1
+	rows: 2
+	size_hint_y: None
+	height: 70
+	canvas.before:
+		Color:
+			rgba: (0, 0.5, 0.9, 1)
+		RoundedRectangle:
+			size: self.size
+			pos: self.pos
+			radius: [(10.0, 10.0), (10.0, 10.0), (10.0, 10.0), (10.0, 10.0)]
+
+<labelHourBox>
+	font_size: '10sp'
+	color: (0, 0, 0, 0.5)
+	size_hint_x: 0.2
+
+<boxCalendarContanier>
+	size_hint_y: None
+	height: self.minimum_height
+	padding: '5sp'
+
+<labelDecoration>
+	size_hint_x: 0.05
+	canvas:
+	    Color
+	    	rgba:  (0.65, 0.65, 0.65, 1)
+		Rectangle:
+			pos:  self.x+(self.width*1.5)/2, self.y 
+			size: self.width/10, self.height
+
+<labelContentCalendar>
+	size_hint_y: None
+	size: self.texture_size
+	padding_x: '10dp'
+	padding_y: '15dp'
+	halign: 'center'
+	valign: 'center'
+	text_size: self.width, None
 
 <buttonBottomMenu@ButtonBehavior+BoxLayout>
 	orientation: 'vertical'

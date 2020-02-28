@@ -11,7 +11,7 @@ class LoadFiles(object):
 		try:
 			site    = "https://boldeagles.000webhostapp.com/calendario.php"
 			local   = "http://localhost/apiCulturaJovem/calendario.php" 
-			getApi  = requests.get(local)
+			getApi  = requests.get(site)
 			arq.write(json.dumps(getApi.text))
 			jsonGet = json.loads(getApi.text)
 		except:
