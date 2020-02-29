@@ -1,3 +1,10 @@
+#:import cos math.cos
+#:import sin math.sin
+#:import pi math.pi
+#:import radians math.radians
+#:import chain itertools.chain
+#:import glob glob.glob
+
 <TelaManager>:
 	Menu:
 		name: 'menu'
@@ -70,9 +77,25 @@
 							source: 'http://assets.pokemon.com/assets/cms2/img/pokedex/full/001.png'
 
 
-			ScrollView: 
+			BoxLayout: 
 				id: projetosScroll
 				orientation: 'vertical'
+				FloatLayout:
+					id: loading
+					size_hint_x: None
+					size_hint_y: None
+					width: 50
+					height: 50
+					pos: root.center_x, root.center_y
+					canvas.before:
+						Color:
+							rgba: (1, 1, 1, 1)
+						Ellipse:
+							size: self.size
+							pos: root.center_x - self.width/2, root.center_y - self.height/2
+					SurroundingSlider:
+						pos: self.pos
+			            radius: 0.4 * self.width / 2
 
 		BoxLayout:
 			orientation: 'horizontal'
@@ -134,6 +157,68 @@
 						font_size: '10sp'
 						color: [(0.7,0.7,0.7,1) , (0,0.6,0.9,1)][root.ids.carousel.index == 2]
 
+<SurroundingSlider>:
+    a: self.angle_stop - self.angle_start
+    angle: radians(self.a * (self.value - self.min) / (self.max - self.min))
+    _half_cap_angle: 1 / 100
+    canvas:
+        Color:
+            rgba: 0, 1, 1, 0.5
+        Mesh:
+            mode: 'triangle_strip'
+            vertices:
+                ((
+                self.center_x + cos(radians(self.angle_start) - pi / 2 + self._half_cap_angle) * self.radius,
+                self.center_y + sin(radians(self.angle_start) - pi / 2 + self._half_cap_angle) * self.radius,
+                0, 1,
+                self.center_x + cos(radians(self.angle_start) - pi / 2 + self._half_cap_angle) * (self.radius + self.bar_width),
+                self.center_y + sin(radians(self.angle_start) - pi / 2 + self._half_cap_angle) * (self.radius + self.bar_width),
+                0, 0,
+                ) + tuple(chain(*[(
+                self.center_x + cos(radians(self.angle_start + a * self.a) - pi / 2) * self.radius,
+                self.center_y + sin(radians(self.angle_start + a * self.a) - pi / 2) * self.radius,
+                .5, 1,
+                self.center_x + cos(radians(self.angle_start + a * self.a) - pi / 2) * (self.radius + self.bar_width),
+                self.center_y + sin(radians(self.angle_start + a * self.a) - pi / 2) * (self.radius + self.bar_width),
+                .5, 0
+                ) for a in (x / float(self.segments) for x in range(self.segments + 1))])) + (
+                self.center_x + cos(radians(self.angle_stop) - pi / 2 - self._half_cap_angle) * self.radius,
+                self.center_y + sin(radians(self.angle_stop) - pi / 2 - self._half_cap_angle) * self.radius,
+                1, 1,
+                self.center_x + cos(radians(self.angle_stop) - pi / 2 - self._half_cap_angle) * (self.radius + self.bar_width),
+                self.center_y + sin(radians(self.angle_stop) - pi / 2 - self._half_cap_angle) * (self.radius + self.bar_width),
+                1, 0,
+                )) if self.angle_start and self.angle_stop and self.a and self.bar_width and self.radius else []
+            indices: range(2 * self.segments + 6)
+        Color:
+        	rgba: (0, 0.5, 1, 1)
+        Mesh:
+            mode: 'triangle_strip'
+            vertices:
+                ((
+                self.center_x + cos(radians(self.angle_start) - pi / 2 + self._half_cap_angle) * self.radius,
+                self.center_y + sin(radians(self.angle_start) - pi / 2 + self._half_cap_angle) * self.radius,
+                0, 1,
+                self.center_x + cos(radians(self.angle_start) - pi / 2 + self._half_cap_angle) * (self.radius + self.bar_width),
+                self.center_y + sin(radians(self.angle_start) - pi / 2 + self._half_cap_angle) * (self.radius + self.bar_width),
+                0, 0,
+                ) + tuple(chain(*[(
+                self.center_x + (cos(radians(self.angle_start) + a * self.angle - pi / 2)) * self.radius,
+                self.center_y + (sin(radians(self.angle_start) + a * self.angle - pi / 2)) * self.radius,
+                .5, 1,
+                self.center_x + (cos(radians(self.angle_start) + a * self.angle - pi / 2)) * (self.radius + self.bar_width),
+                self.center_y + (sin(radians(self.angle_start) + a * self.angle - pi / 2)) * (self.radius + self.bar_width),
+                .5, 0
+                ) for a in (x / float(self.segments) for x in range(self.segments + 1))])) + (
+                self.center_x + cos(radians(self.angle_start) + self.angle - pi / 2 - self._half_cap_angle) * self.radius,
+                self.center_y + sin(radians(self.angle_start) + self.angle - pi / 2 - self._half_cap_angle) * self.radius,
+                1, 1,
+                self.center_x + cos(radians(self.angle_start) + self.angle - pi / 2 - self._half_cap_angle) * (self.radius + self.bar_width),
+                self.center_y + sin(radians(self.angle_start) + self.angle - pi / 2 - self._half_cap_angle) * (self.radius + self.bar_width),
+                1, 0
+                )) if self.angle_start and self.angle_stop and self.a and self.bar_width and self.radius else []
+            indices: range(2 * self.segments + 6)
+
 <boxTitleCalendar>
 	cols: 1
 	rows: 2
@@ -182,3 +267,7 @@
 <buttonTopConfig@ButtonBehavior+Image>
 	size_hint_x: 0.2
 	color: (1, 1, 1, 0.4)
+
+<SLabel@Label>:
+    size_hint_x: None
+    width: self.texture_size[0]

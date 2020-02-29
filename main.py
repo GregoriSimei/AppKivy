@@ -12,6 +12,8 @@ from kivy.uix.gridlayout 				import GridLayout
 from kivy.lang 							import Builder
 from kivy.uix.behaviors 				import ButtonBehavior
 from kivy.animation 					import Animation
+from kivy.uix.widget import Widget
+from kivy.properties import NumericProperty, StringProperty
 
 
 class TelaManager(ScreenManager):
@@ -19,62 +21,27 @@ class TelaManager(ScreenManager):
 
 class Menu(Screen):
 
-	def numMes (self, num):
-			mes = ""
-			if num == "01":
-				mes = "Jan"
-			elif num == "02":
-				mes = "Fev"
-			elif num == "03":
-				mes = "Mar"
-			elif num == "04":
-				mes = "Abr"
-			elif num == "05":
-				mes = "Mar"
-			elif num == "06":
-				mes = "Mai"
-			elif num == "07":
-				mes = "Jun"
-			elif num == "08":
-				mes = "Jul"
-			elif num == "09":
-				mes = "Ago"
-			elif num == "10":
-				mes = "Set"
-			elif num == "11":
-				mes = "Out"
-			elif num == "12":
-				mes = "Nov"
-			return mes
-
 	def addDinamicContentCalendar (self):
 
-		evento = LoadFiles().getAllDatasCalendar()
+		jsonRequest = LoadFiles().getAllDatasCalendar()
 
-		DIAS = [
-		    'Seg',
-		    'Ter',
-		    'Qua',
-		    'Qui',
-		    'Sex',
-		    'Sáb',
-		    'Dom'
-		]
+		DAYS = ['Seg','Ter','Qua','Qui','Sex','Sáb','Dom']
+		MONTHS = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez']
 
 		day = ""
-		# Adiciona os textos nos widgets
-		for datas in evento:
 
-			if day != datas["date"]:
-				dia = date(year=int(datas["date"][0:4]), month=int(datas["date"][5:7]), day=int(datas["date"][8:10]))
-				mes = self.numMes(datas["date"][5:7])
+		for jsonUnitData in jsonRequest:
+
+			if day != jsonUnitData["date"]:
+				dia = date(year=int(jsonUnitData["date"][0:4]), month=int(jsonUnitData["date"][5:7]), day=int(jsonUnitData["date"][8:10]))
+				mes = MONTHS[int(jsonUnitData["date"][5:7])-1]
 				boxDataLayout	= BoxLayout(size_hint_y = None, height = 40)
-				labelMonth		= Label(text = DIAS[dia.weekday()-1], size_hint_x = 0.2, bold = True, color = (0, 0, 0, 0.5))
-				labelDayAndYear	= Label(text = datas["date"][8:10] + " " + mes + " " + datas["date"][0:4], font_size = '10sp', color = (0, 0, 0, 0.5), halign = "left")
+				labelMonth		= Label(text = DAYS[dia.weekday()-1], size_hint_x = 0.2, bold = True, color = (0, 0, 0, 0.5))
+				labelDayAndYear	= Label(text = jsonUnitData["date"][8:10] + " " + mes + " " + jsonUnitData["date"][0:4], font_size = '10sp', color = (0, 0, 0, 0.5), halign = "left")
 				boxDataLayout.add_widget(labelMonth)
 				boxDataLayout.add_widget(labelDayAndYear)
 				self.ids.calendario_Scroll.add_widget(boxDataLayout)
-				day = datas["date"]
+				day = jsonUnitData["date"]
 
 			box 		= boxCalendarContanier()
 			decoration 	= labelDecoration()
@@ -82,13 +49,13 @@ class Menu(Screen):
 			title 		= boxTitleCalendar()
 			box.add_widget(decoration)
 
-			for data in datas:
-				if data == "hour":
-					hour.text = datas[data][0:5]
-				if data == "title":
-					title.labelTitle(datas[data])
-				if data == "content":
-					title.labelContent(datas[data])
+			for evento in jsonUnitData:
+				if evento == "hour":
+					hour.text = jsonUnitData[evento][0:5]
+				if evento == "title":
+					title.labelTitle(jsonUnitData[evento])
+				if evento == "content":
+					title.labelContent(jsonUnitData[evento])
 			box.add_widget(hour)
 			box.add_widget(title)
 
@@ -143,5 +110,28 @@ class Culturajovem(App):
     def build(self):
         return TelaManager()
 
+class SurroundingSlider(Widget):
+	# value é para o circulo de baixo
+    value = NumericProperty(0.5)
+
+    # angle_start é para o circula de traz
+    angle_start = NumericProperty(360)
+
+    segments = NumericProperty(50)
+
+    angle_stop = NumericProperty(33)
+
+    radius = NumericProperty(20)
+
+    bar_width = NumericProperty(10)
+
+    cap_length = NumericProperty(30)
+
+    cap_texture_cut = NumericProperty(.2)
+    min = NumericProperty(0)
+    max = NumericProperty(1)
+    a = NumericProperty(0)
+    texture_back = StringProperty('fundo.png')
+    texture_fill = StringProperty('fundo2.png')
 
 Culturajovem().run()
