@@ -30,6 +30,10 @@ class Menu(Screen):
 
 		day = ""
 
+		print(self.ids.img.pos)
+
+		self.ids.calendario_Container.clear_widgets()
+
 		for jsonUnitData in jsonRequest:
 
 			if day != jsonUnitData["date"]:
@@ -40,7 +44,7 @@ class Menu(Screen):
 				labelDayAndYear	= Label(text = jsonUnitData["date"][8:10] + " " + mes + " " + jsonUnitData["date"][0:4], font_size = '10sp', color = (0, 0, 0, 0.5), halign = "left")
 				boxDataLayout.add_widget(labelMonth)
 				boxDataLayout.add_widget(labelDayAndYear)
-				self.ids.calendario_Scroll.add_widget(boxDataLayout)
+				self.ids.calendario_Container.add_widget(boxDataLayout)
 				day = jsonUnitData["date"]
 
 			box 		= boxCalendarContanier()
@@ -59,7 +63,7 @@ class Menu(Screen):
 			box.add_widget(hour)
 			box.add_widget(title)
 
-			self.ids.calendario_Scroll.add_widget(box)
+			self.ids.calendario_Container.add_widget(box)
 
 class boxCalendarContanier(BoxLayout):
 	pass
@@ -102,6 +106,9 @@ class boxTitleCalendar(ButtonBehavior, GridLayout):
 
 class labelDecoration(Label):
 	pass	
+
+class boxCalendarContainers(BoxLayout):
+	pass
 
 class labelContentCalendar(Label):
 	pass	

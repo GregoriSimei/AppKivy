@@ -4,6 +4,7 @@
 #:import radians math.radians
 #:import chain itertools.chain
 #:import glob glob.glob
+#:import ScrollEffect  kivy.effects.scroll.ScrollEffect
 
 <TelaManager>:
 	Menu:
@@ -17,37 +18,12 @@
 		orientation: 'vertical'
 		canvas:
 			Color:
-				rgba: (0.9, 0.9, 0.9, 1)
+				rgba: (0, 0.35, 0.4, 1)
 			Rectangle:
 				size: self.size
 				pos: self.pos
 
-		BoxLayout:
-			padding: '5sp'
-			size_hint_y: 0.09
-			canvas:
-				Color:
-					rgba: (1, 1, 1, 1)
-				Rectangle:
-					size: self.size
-					pos: self.pos
-			BoxLayout:
-				size_hint_x: None
-				width: 0
-			buttonTopConfig:
-				source: 'img/menu.png'
-			Carousel:
-				id: carouselIgreja
-				Label:
-					color: (0,0.6,0.6,1)
-					text: 'CULTURA JOVEM'
-					bold: True
-				Label:
-					color: (0,0.6,0.6,1)
-					text: 'IB GUABIROTUBA'
-					bold: True
-			buttonTopConfig:
-				source: 'img/definicoes.png'
+		
 
 		Carousel:
 			id: carousel
@@ -55,11 +31,24 @@
 			index: 1
 			ScrollView:
 				orientation: 'vertical'
+				effect_cls: ScrollEffect
 				BoxLayout:
 					id: calendario_Scroll
 					orientation: 'vertical'
 					size_hint_y: None
 					height: self.minimum_height
+					BoxLayout:
+						id: img
+						orientation: 'vertical'
+						size_hint_y: None
+						height: self.minimum_height
+						Image:
+							size_hint_y: None
+							allow_stretch: True
+							size: self.width, self.width
+							source: './fundoCalendario.png'
+					boxCalendarContainers:
+						id: calendario_Container
 					
 			ScrollView:
 				orientation: 'vertical'
@@ -218,6 +207,19 @@
                 1, 0
                 )) if self.angle_start and self.angle_stop and self.a and self.bar_width and self.radius else []
             indices: range(2 * self.segments + 6)
+
+<boxCalendarContainers>
+	orientation: 'vertical'
+	padding: ['5sp','50sp', '5sp', '20sp']
+	size_hint_y: None
+	height: self.minimum_height
+	canvas:
+		Color:
+			rgba: (1, 1, 1, 1)
+		RoundedRectangle:
+			size: self.size
+			pos: self.pos
+			radius: [(20.0, 20.0), (20.0, 20.0), (0, 0), (0, 0)]
 
 <boxTitleCalendar>
 	cols: 1
